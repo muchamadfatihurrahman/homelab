@@ -1,0 +1,21 @@
+volumes:
+  pgadmin-data:
+    driver: local
+version: "3.8"
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: unless-stopped
+    ports:
+      - 8888:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL:${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD:${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    env_file:
+      - .env
+networks:
+  kestra_default:
+    external: true
