@@ -1,11 +1,7 @@
-volumes:
-  pgadmin-data:
-    driver: local
-version: "3.8"
 services:
   pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
+    image: dpage/pgadmin4:8.9
+    container_name: pgadmin
     restart: unless-stopped
     ports:
       - 8888:80
@@ -19,3 +15,6 @@ services:
 networks:
   kestra_default:
     external: true
+volumes:
+  pgadmin-data:
+    driver: local
