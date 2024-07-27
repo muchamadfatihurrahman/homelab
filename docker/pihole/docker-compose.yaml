@@ -1,0 +1,18 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+     # - "100:80"
+    volumes:
+      - '/etc/pihole:/etc/pihole'
+      - '/etc/dnsmasq.d:/etc/dnsmasq.d'
+    environment:
+      TZ: 'Asia/Jakarta'
+      WEBPASSWORD: 'serverutamastb'
+      FTLCONF_LOCAL_IPV4: '10.10.1.2'
+    restart: always
+    dns:
+     - 127.0.0.1

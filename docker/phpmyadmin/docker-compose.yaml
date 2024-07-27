@@ -1,0 +1,18 @@
+services:
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8070:80
+
+networks:
+  default:
+    external: true
+    name: database

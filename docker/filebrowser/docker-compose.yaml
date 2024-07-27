@@ -1,0 +1,13 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: hurlenko/filebrowser:latest
+    user: 0:0
+    ports:
+      - 8090:8080
+    volumes:
+      - /.:/data
+      - /home/fatih/docker/filebrowser/config:/config
+    environment:
+      - filebrowserdocker.latansasolutions.com=/filebrowser
+    restart: always

@@ -1,0 +1,20 @@
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    volumes:
+      - /home/fatih/docker/jellyfin/config:/config
+      - /mnt/media/tvshows:/data/tvshows
+      - /mnt/media/movies:/data/movies
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/GMT-7
+      - JELLYFIN_PublishedServerUrl= ${JELLYFIN_PublishedServerUrl}
+    restart: always
+    network_mode: bridge

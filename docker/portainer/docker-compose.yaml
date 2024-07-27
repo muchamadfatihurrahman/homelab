@@ -1,0 +1,14 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    privileged: true
+    volumes:
+      - './data:/data'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: npm

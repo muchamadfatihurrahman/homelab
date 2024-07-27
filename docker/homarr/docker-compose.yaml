@@ -1,0 +1,10 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/fatih/docker/homarr/configs:/app/data/configs
+      - /home/fatih/docker/homarr/icons:/app/public/icons
+      - /home/fatih/docker/homarr/data:/data
+    restart: unless-stopped

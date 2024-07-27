@@ -1,15 +1,15 @@
 services:
   pgadmin:
-    image: dpage/pgadmin4:8.9
     container_name: pgadmin
-    restart: unless-stopped
+    image: dpage/pgadmin4:8.9
     ports:
       - 8888:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL:${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD:${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
     env_file:
       - .env
 networks:
