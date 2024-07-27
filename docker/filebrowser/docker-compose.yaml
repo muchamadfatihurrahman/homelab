@@ -7,7 +7,7 @@ services:
       - 8090:8080
     volumes:
       - /.:/data
-      - /home/fatih/docker/filebrowser/config:/config
+      - ./config:/config
     environment:
       - filebrowserdocker.latansasolutions.com=/filebrowser
     restart: always

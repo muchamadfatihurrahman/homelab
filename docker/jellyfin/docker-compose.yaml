@@ -8,7 +8,7 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     volumes:
-      - /home/fatih/docker/jellyfin/config:/config
+      - ./config:/config
       - /mnt/media/tvshows:/data/tvshows
       - /mnt/media/movies:/data/movies
     environment:
