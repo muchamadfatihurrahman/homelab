@@ -5,9 +5,7 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-    environment:
-      TZ: 'Asia/Jakarta'
-      WEBPASSWORD: 'example'
+    env_file: .env
     volumes:
       - '/etc/pihole:/etc/pihole'
       - '/etc/dnsmasq.d:/etc/dnsmasq.d'
