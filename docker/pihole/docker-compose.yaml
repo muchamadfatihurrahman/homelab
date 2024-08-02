@@ -3,16 +3,28 @@ services:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
-      - 53:53/tcp
-      - 53:53/udp
-     # - 100:80
-    volumes:
-      - /etc/pihole:/etc/pihole
-      - /etc/dnsmasq.d:/etc/dnsmasq.d
+      - "53:53/tcp"
+      - "53:53/udp"
     environment:
-      TZ: Asia/Jakarta
-      WEBPASSWORD: serverutamastb
-      FTLCONF_LOCAL_IPV4: 10.10.1.2
+      TZ: 'Asia/Jakarta'
+      WEBPASSWORD: 'example'
+    volumes:
+      - '/etc/pihole:/etc/pihole'
+      - '/etc/dnsmasq.d:/etc/dnsmasq.d'
     restart: always
-    dns:
-     - 127.0.0.1
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.local.latansasolutions.com`)"
+      - "traefik.http.routers.pihole.entrypoints=https"
+      - "traefik.http.routers.pihole.tls=true"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.pihole-prefix.addprefix.prefix=/admin"
+      - "traefik.http.middlewares.pihole-redirect.redirectregex.regex=^/admin/$"
+      - "traefik.http.middlewares.pihole-redirect.redirectregex.replacement=/"
+      - "traefik.http.routers.pihole.middlewares=pihole-prefix,pihole-redirect"
+
+networks:
+  proxy:
+    external: true
