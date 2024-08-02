@@ -1,0 +1,14 @@
+http:
+  routers:
+    homeassistant-rtr:
+      rule: "Host(`homeassistant.local.latansasolutions.com`)"
+      entryPoints:
+        - https
+      service: homeassistant-svc
+      tls:
+        certResolver: cloudflare
+  services:
+    homeassistant-svc:
+      loadBalancer:
+        servers:
+          - url: "http://10.10.1.2:8123"

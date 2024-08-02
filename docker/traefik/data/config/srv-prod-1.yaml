@@ -1,0 +1,14 @@
+http:
+  routers:
+    srv-prod-1-rtr:
+      rule: "Host(`srv-prod-1.local.latansasolutions.com`)"
+      entryPoints:
+        - https
+      service: srv-prod-1-svc
+      tls:
+        certResolver: cloudflare
+  services:
+    srv-prod-1-svc:
+      loadBalancer:
+        servers:
+          - url: "https://10.10.1.5:8006"
