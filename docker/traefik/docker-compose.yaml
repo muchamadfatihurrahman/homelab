@@ -1,0 +1,50 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    dns:
+      - 10.10.2.1
+    networks:
+      - proxy
+      - pdns
+    ports:
+      - 80:80
+      - 443:443/tcp
+      - 443:443/udp
+      - 853:853
+    environment:
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+      TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+    env_file: .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik.yaml:/traefik.yml:ro
+      - ./data/acme.json:/acme.json
+      - ./data/config:/etc/traefik/config:ro
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.traefik.entrypoints=http
+      - traefik.http.routers.traefik.rule=Host(`traefik.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}
+      - traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.routers.traefik.middlewares=traefik-https-redirect
+      - traefik.http.routers.traefik-secure.entrypoints=https
+      - traefik.http.routers.traefik-secure.rule=Host(`traefik.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.routers.traefik-secure.middlewares=traefik-auth
+      - traefik.http.routers.traefik-secure.tls=true
+      - traefik.http.routers.traefik-secure.tls.certresolver=cloudflare
+      - traefik.http.routers.traefik-secure.tls.domains[0].main=srv-prod-1.local.latansatech.my.id
+      - traefik.http.routers.traefik-secure.tls.domains[0].sans=*.srv-prod-1.local.latansatech.my.id
+      - traefik.http.routers.traefik-secure.service=api@internal
+
+networks:
+  proxy:
+    external: true
+  pdns:
+    external: true

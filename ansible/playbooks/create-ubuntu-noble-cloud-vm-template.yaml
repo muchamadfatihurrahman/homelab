@@ -1,0 +1,45 @@
+---
+- name: Deploy Ubuntu Noble Cloud Image on Proxmox
+  hosts: proxmox
+  become: true
+  tasks:
+
+    - name: Check if Ubuntu Noble Cloud Image already exists
+      stat:
+        path: "/root/noble-server-cloudimg-amd64.img"
+      register: img_stat
+
+    - name: Download Ubuntu Noble Cloud Image if not exists
+      get_url:
+        url: "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+        dest: "/root/noble-server-cloudimg-amd64.img"
+      when: not img_stat.stat.exists
+
+    - name: Ensure image is fully downloaded
+      wait_for:
+        path: "/root/noble-server-cloudimg-amd64.img"
+        timeout: 1800
+
+    - name: Check if VM ID 9000 exists
+      command: qm status 9000
+      register: vm_status
+      ignore_errors: true
+      failed_when: false
+      changed_when: false  
+
+    - name: Fail if VM ID 9000 already exists
+      fail:
+        msg: "VM ID 9000 already exists! Choose a different ID or delete the existing VM."
+      when: vm_status.rc == 0
+
+    - name: Create VM in Proxmox
+      command: qm create 9000 --name ubuntu-noble-cloud
+      register: create_vm
+      failed_when: create_vm.rc != 0
+      when: vm_status.rc != 0 
+
+    - name: Import disk to Proxmox
+      command: qm set 9000 --scsi0 local-lvm:0,import-from=/root/noble-server-cloudimg-amd64.img
+
+    - name: Convert VM to template
+      command: qm template 9000

@@ -1,0 +1,29 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    volumes:
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.routers.portainer.entrypoints=https
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.tls.certresolver=cloudflare
+      - traefik.http.routers.portainer.service=portainer
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+
+      - traefik.http.routers.edge-portainer.rule=Host(`portaineragent.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.routers.edge-portainer.entrypoints=https
+      - traefik.http.routers.edge-portainer.tls=true
+      - traefik.http.routers.edge-portainer.tls.certresolver=cloudflare
+      - traefik.http.routers.edge-portainer.service=edge-portainer
+      - traefik.http.services.edge-portainer.loadbalancer.server.port=8000
+
+networks:
+  proxy:
+    external: true

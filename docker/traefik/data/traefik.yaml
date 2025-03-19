@@ -1,0 +1,39 @@
+api:
+  dashboard: true
+  debug: true
+entryPoints:
+  http:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: ":443"
+  dot:
+    address: ":853"
+serversTransport:
+  insecureSkipVerify: true
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik/config
+    watch: true
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: ${EMAIL}
+      storage: acme.json
+      caServer: https://acme-v02.api.letsencrypt.org/directory 
+
+      dnsChallenge:
+        provider: cloudflare
+        disablePropagationCheck: true
+        delayBeforeCheck: 100s
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"

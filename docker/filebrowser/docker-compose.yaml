@@ -1,0 +1,24 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: hurlenko/filebrowser:latest
+    user: 0:0
+    volumes:
+      - /.:/data
+      - ./data:/config
+    environment:
+      - filebrowser.srv-prod-1.local.latansatech.my.id=/filebrowser
+    restart: always
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.routers.filebrowser.entrypoints=https
+      - traefik.http.routers.filebrowser.tls=true
+      - traefik.http.routers.filebrowser.tls.certresolver=cloudflare
+      - traefik.http.services.filebrowser.loadbalancer.server.port=8080
+
+networks:
+  proxy:
+    external: true

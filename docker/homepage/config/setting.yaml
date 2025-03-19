@@ -1,0 +1,16 @@
+---
+
+title: Muchamad Fatihurrahman
+
+background:
+  image: /images/background.jpg
+  blur: sm
+  saturate: 50
+  brightness: 50
+  opacity: 50
+
+theme: dark
+color: zinc
+
+headerStyle: boxed
+fiveColumns: true

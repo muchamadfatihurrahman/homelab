@@ -1,0 +1,121 @@
+---
+
+- Networking:
+    - Router HPE:
+        icon: https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Hewlett_Packard_Enterprise_logo.svg/2560px-Hewlett_Packard_Enterprise_logo.svg.png
+        href: "{{HOMEPAGE_VAR_ROUTERHPE_URL}}"
+        description: docker
+    - Switch 3Com:
+        icon: https://upload.wikimedia.org/wikipedia/commons/a/a1/3com_logo.svg
+        href: "{{HOMEPAGE_VAR_SWITCH3COM_URL}}"
+        description: docker
+    - Ap TP-Link:
+        icon: tp-link.png
+        href: "{{HOMEPAGE_VAR_APTPLINK_URL}}"
+        description: docker
+        
+- Server:
+    - IPMI:
+        icon: supermicro.svg
+        href: "{{HOMEPAGE_VAR_IPMI_URL}}"
+        description: docker
+    - Proxmox:
+        icon: proxmox.svg
+        href: "{{HOMEPAGE_VAR_PROXMOX_URL}}"
+        description: docker
+    - Truenas:
+        icon: truenas.svg
+        href: "{{HOMEPAGE_VAR_TRUENAS_URL}}"
+        description: docker
+
+- DNS:
+    - Power DNS:
+        icon: powerdns.svg
+        href: "{{HOMEPAGE_VAR_POWERDNS_URL}}"
+        description: docker
+    - Adguard:
+        icon: adguard-home.svg
+        href: "{{HOMEPAGE_VAR_ADGUARD_URL}}"
+        description: docker
+
+- File Manager:
+    - File Browser:
+        icon: filebrowser.svg
+        href: "{{HOMEPAGE_VAR_FILEBROWSER_URL}}"
+        description: docker
+    - Longhorn:
+        icon: longhorn.svg
+        href: "{{HOMEPAGE_VAR_LONGHORN_URL}}"
+        description: rke2 
+       
+- Containers:
+    - Portainer:
+        icon: portainer.svg
+        href: "{{HOMEPAGE_VAR_PORTAINER_URL}}"
+        description: docker
+    - Rancher:
+        icon: rancher.svg
+        href: "{{HOMEPAGE_VAR_RACNHER_URL}}"
+        description: rke2
+        
+- CI/CD:
+    - Git Lab:
+        icon: gitlab.svg
+        href: "{{HOMEPAGE_VAR_GITLAB_URL}}"
+        description: rke2
+    - Sonar Qube:
+        icon: sonarqube.svg
+        href: "{{HOMEPAGE_VAR_SONARQUBE_URL}}"
+        description: rke2
+    - Argo CD:
+        icon: argo-cd.png
+        href: "{{HOMEPAGE_VAR_ARGOCD_URL}}"
+        description: rke2
+        
+- Security:
+    - Passbolt:
+        icon: passbolt.png
+        href: "{{HOMEPAGE_VAR_PASSBOLT_URL}}"
+        description: docker
+    - Authentik:
+        icon: authentik.png
+        href: "{{HOMEPAGE_VAR_AUTHENTIK_URL_1}}"
+        description: docker
+    - Authentik:
+        icon: authentik.png
+        href: "{{HOMEPAGE_VAR_AUTHENTIK_URL_2}}"
+        description: rke2
+
+- Monitoring & Logging:
+    - Uptime Kuma:
+        icon: uptime-kuma.svg
+        href: "{{HOMEPAGE_VAR_UPTIMEKUMA_URL}}"
+        description: docker
+    - Prometheus:
+        icon: prometheus.svg
+        href: "{{HOMEPAGE_VAR_PROMOTHEUS_URL}}"
+        description: rke2
+    - Grafana:
+        icon: grafana.svg
+        href: "{{HOMEPAGE_VAR_GRAFANA_URL}}"
+        description: rke2
+
+- Reverse Proxy:
+    - Traefik:
+        icon: traefik.svg
+        href: "{{HOMEPAGE_VAR_TRAEFIK_URL_1}}"
+        description: docker
+    - Traefik:
+        icon: traefik.svg
+        href: "{{HOMEPAGE_VAR_TRAEFIK_URL_2}}"
+        description: rke2
+        
+- Media:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: "{{HOMEPAGE_VAR_JELLYFIN_URL}}"
+        description: rke2
+    - Open WebUI:
+        icon: open-webui.png
+        href: "{{HOMEPAGE_VAR_OPENWEBUI_URL}}"
+        description: rke2

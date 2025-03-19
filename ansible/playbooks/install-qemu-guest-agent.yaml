@@ -1,0 +1,15 @@
+---
+- name: Install QEMU Guest Agent
+  hosts: sage
+  become: yes
+  tasks:
+    - name: Install QEMU Guest Agent (Ubuntu)
+      apt:
+        name: qemu-guest-agent
+        state: present
+
+    - name: Enable and Start QEMU Guest Agent
+      systemd:
+        name: qemu-guest-agent
+        enabled: yes
+        state: started

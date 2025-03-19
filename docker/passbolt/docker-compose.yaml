@@ -1,0 +1,55 @@
+---
+volumes:
+  passbolt-db:
+  passbolt-data-gpg:
+  passbolt-data-jwt:
+services:
+  passbolt-db:
+    container_name: passbolt-db
+    image: docker.io/library/mariadb:latest
+    env_file: .env
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=$PASSBOLT_DB_NAME
+      - MYSQL_USER=$PASSBOLT_DB_USER
+      - MYSQL_PASSWORD=$PASSBOLT_DB_PASS
+    volumes:
+      - passbolt-db:/var/lib/mysql
+    restart: always
+    networks:
+      - proxy
+  passbolt:
+    container_name: passbolt-app
+    image: docker.io/passbolt/passbolt:latest-ce
+    depends_on:
+      - passbolt-db
+    env_file: .env
+    environment:
+      - APP_FULL_BASE_URL=https://passbolt.srv-prod-1.local.latansatech.my.id
+      - DATASOURCES_DEFAULT_HOST=passbolt-db
+      - DATASOURCES_DEFAULT_USERNAME=$PASSBOLT_DB_USER
+      - DATASOURCES_DEFAULT_PASSWORD=$PASSBOLT_DB_PASS
+      - DATASOURCES_DEFAULT_DATABASE=$PASSBOLT_DB_NAME
+      - EMAIL_TRANSPORT_DEFAULT_HOST=$EMAIL_TRANSPORT_DEFAULT_HOST
+      - EMAIL_TRANSPORT_DEFAULT_PORT=$EMAIL_TRANSPORT_DEFAULT_PORT
+      - EMAIL_TRANSPORT_DEFAULT_USERNAME=$EMAIL_TRANSPORT_DEFAULT_USERNAME
+      - EMAIL_TRANSPORT_DEFAULT_PASSWORD=$EMAIL_TRANSPORT_DEFAULT_PASSWORD
+      - EMAIL_TRANSPORT_DEFAULT_TLS=true
+      - EMAIL_DEFAULT_FROM=$EMAIL_DEFAULT_FROM
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.passbolt.rule=Host(`passbolt.srv-prod-1.local.latansatech.my.id`)
+      - traefik.http.routers.passbolt.entrypoints=https
+      - traefik.http.routers.passbolt.tls=true
+      - traefik.http.routers.passbolt.tls.certresolver=cloudflare
+    volumes:
+      - passbolt-data-gpg:/etc/passbolt/gpg
+      - passbolt-data-jwt:/etc/passbolt/jwt
+    command: ["/usr/bin/wait-for.sh", "-t", "0", "passbolt-db:3306", "--", "/docker-entrypoint.sh"]
+    restart: always
+    networks:
+      - proxy
+    
+networks:
+  proxy:
+    external: true
