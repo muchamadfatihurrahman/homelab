@@ -1,6 +1,6 @@
 services:
   mariadb:
-    image: mariadb:11-ubi
+    image: mariadb:11.7.2
     container_name: powerdns-mysql-mariadb
     networks:
       pdns:
@@ -15,7 +15,7 @@ services:
     restart: always
 
   pdns-mysql-master:
-    image: pschiffe/pdns-mysql:latest
+    image: pschiffe/pdns-mysql:4.9
     container_name: powerdns-mysql-master
     hostname: pdns
     networks:
@@ -43,7 +43,7 @@ services:
     restart: always
 
   pdns-admin-mysql:
-    image: pschiffe/pdns-admin
+    image: pschiffe/pdns-admin:0.4.1
     container_name: powerdns-mysql-admin
     networks:
       proxy:
