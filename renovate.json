@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "automerge": false,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "description": "Auto-merge minor and patch updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Auto-merge devDependencies minor and patch",
+      "matchDepTypes": ["devDependencies", "require-dev"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "groupName": "devDependencies (auto-merged)"
+    },
+    {
+      "description": "Label major updates for manual review",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["major update", "needs review"]
+    }
+  ]
+}
