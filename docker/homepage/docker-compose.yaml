@@ -2,6 +2,7 @@ services:
   homepage:
     container_name: homepage
     image: ghcr.io/gethomepage/homepage:v1.0.4
+    env_file: .env
     environment:
       PUID: $PUID
       PGID: $PGID
