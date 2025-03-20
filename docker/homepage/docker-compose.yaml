@@ -5,6 +5,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
+      HOMEPAGE_ALLOWED_HOSTS: homepage.srv-prod-1.local.latansatech.my.id
     volumes:
       - ./config:/app/config
       - ./config/images:/app/public/images
