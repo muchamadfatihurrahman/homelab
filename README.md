@@ -1,2 +1,2 @@
 # 'Homelab'
-Berikut adalah seluruh file dokumentasi homelab ku. Di sini Kamu akan menemukan catatan, pengaturan, dan konfigurasi untuk infrastruktur, aplikasi, jaringan, dan lainnya.
+These are all my homelab documentation files. You will find settings and configurations related to infrastructure, applications, networks, etc. here.
